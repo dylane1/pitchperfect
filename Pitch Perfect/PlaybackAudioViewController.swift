@@ -9,10 +9,8 @@
 import UIKit
 
 final class PlaybackAudioViewController: UIViewController {
+    
     private var playbackAudioView: PlaybackAudioView!
-    
-    private lazy var audioController = AudioController()
-    
     
     //MARK: - View Lifecycle
     
@@ -28,10 +26,7 @@ final class PlaybackAudioViewController: UIViewController {
     }
     
     //MARK: - Public funk(s)
-    
-    func configure() {
-        
-    }
+   
     
     //MARK: - Private funk(s)
 }

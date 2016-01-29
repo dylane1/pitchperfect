@@ -10,8 +10,7 @@ import UIKit
 
 final class RecordAudioView: UIView {
     typealias IBActionClosure = () -> Void
-    private var startRecording: IBActionClosure?
-    private var pauseRecording: IBActionClosure?
+
     private var doneRecording: IBActionClosure?
     
     enum AudioRecorderState {
@@ -24,6 +23,7 @@ final class RecordAudioView: UIView {
         }
     }
     
+    private lazy var audioController = AudioController()
     
     
     @IBOutlet weak var recordAudioButton: UIButton!
@@ -35,26 +35,21 @@ final class RecordAudioView: UIView {
     
     @IBAction func recordButtonTapped(sender: AnyObject) {
         currentRecordingState = .Recording
-        startRecording?()
+        audioController.startRecording()
     }
     @IBAction func doneButtonTapped(sender: AnyObject) {
         currentRecordingState = .Stopped
+        audioController.doneRecording()
         doneRecording?()
     }
     @IBAction func pauseButtonTapped(sender: AnyObject) {
         currentRecordingState = .Paused
-        pauseRecording?()
+        audioController.pauseRecording()
     }
     
     
-    func configure(
-        withStartRecording  start: IBActionClosure,
-        pauseRecording      pause: IBActionClosure,
-        doneRecording       done: IBActionClosure)
-    {
-            startRecording = start
-            pauseRecording = pause
-            doneRecording = done
+    func configure(withDoneRecordingClosure done: IBActionClosure) {
+        doneRecording = done
     }
     /*
     // Only override drawRect: if you perform custom drawing.

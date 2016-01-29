@@ -16,4 +16,9 @@ struct Constants {
     struct ColorScheme {
         
     }
+    
+}
+
+enum AudioPlaybackType {
+    case Snail, Rabbit, Chipmunk, Vader
 }
