@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+struct Constants {
+    struct SegueIDs {
+        static let showPlaybackViewController = "showPlaybackViewController"
+    }
+    
+    struct ColorScheme {
+        
+    }
+}

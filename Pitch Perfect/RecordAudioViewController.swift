@@ -8,11 +8,20 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+final class RecordAudioViewController: UIViewController {
+    private var recordAudioView: RecordAudioView!
+    
+    private lazy var audioController = AudioController()
+    
+    
+    
+    //MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        title = LocalizedStrings.ViewControllerTitles.record
+        
+        configureView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,5 +30,44 @@ class ViewController: UIViewController {
     }
 
 
+    //MARK: - Segues
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == Constants.SegueIDs.showPlaybackViewController {
+            guard let destinationVC = segue.destinationViewController as? PlaybackAudioViewController else { fatalError(":[") }
+            
+            destinationVC.configure()
+        }
+    }
+    
+    //MARK: - Private funk(s)
+    
+    private func configureView() {
+        recordAudioView = view as! RecordAudioView
+        let startRecording = { [weak self] in
+            self!.audioController.startRecording()
+        }
+        let pauseRecording = { [weak self] in
+            self!.audioController.pauseRecording()
+        }
+        let doneRecording = { [weak self] in
+            self!.audioController.doneRecording()
+            self!.performSegueWithIdentifier(Constants.SegueIDs.showPlaybackViewController, sender: nil)
+        }
+        recordAudioView.configure(withStartRecording: startRecording, pauseRecording: pauseRecording, doneRecording: doneRecording)
+    }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+/** The End :] */

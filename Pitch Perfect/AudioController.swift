@@ -9,7 +9,11 @@
 import Foundation
 import AVFoundation
 
-struct AudioRecorder {
+struct AudioController {
+    
+    init() {
+        
+    }
     
     
     //MARK: - Public funk(s)
@@ -25,4 +29,28 @@ struct AudioRecorder {
     func doneRecording() {
         print("done recording")
     }
+    
+    func playRecording() {
+        print("play recording")
+    }
+    
+    //MARK: - Private funk(s)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
