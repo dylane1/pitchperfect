@@ -9,54 +9,117 @@
 import UIKit
 
 final class RecordAudioView: UIView {
-    typealias IBActionClosure = () -> Void
-
-    private var doneRecording: IBActionClosure?
+    typealias IBActionClosure = (recordedAudio: RecordedAudio) -> Void
+    private var doneRecordingSuccessfully: IBActionClosure?
     
     enum AudioRecorderState {
         case Stopped, Recording, Paused
     }
     
-    private var currentRecordingState: AudioRecorderState = .Stopped {
-        didSet {
-            
-        }
-    }
+    private var currentRecordingState: AudioRecorderState = .Stopped
     
-    private lazy var audioController = AudioController()
+    private var audioController: AudioController?
     
+    //MARK: - IBOutlets
     
     @IBOutlet weak var recordAudioButton: UIButton!
-    @IBOutlet weak var tapToBeginLabel: UILabel!
+    @IBOutlet weak var recordingLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var pauseContinueButton: UIButton!
     
-   
+    //MARK: - IBActions
     
     @IBAction func recordButtonTapped(sender: AnyObject) {
         currentRecordingState = .Recording
-        audioController.startRecording()
+        audioController!.startRecording()
+        
+        recordAudioButton.enabled   = false
+        recordingLabel.text         = LocalizedStrings.Labels.RecordAudioView.recording
+        doneButton.enabled          = true
+        doneButton.hidden           = false
+        pauseContinueButton.enabled = true
+        pauseContinueButton.hidden  = false
     }
     @IBAction func doneButtonTapped(sender: AnyObject) {
         currentRecordingState = .Stopped
-        audioController.doneRecording()
-        doneRecording?()
+        audioController!.doneRecording()
+        configureButtonsAndLabels()
     }
     @IBAction func pauseButtonTapped(sender: AnyObject) {
-        currentRecordingState = .Paused
-        audioController.pauseRecording()
+        switch currentRecordingState {
+        case .Recording:
+            currentRecordingState = .Paused
+            audioController!.doPauseRecording(true)
+            pauseContinueButton.setTitle(LocalizedStrings.Temporary.continueRecording, forState: .Normal)
+            recordingLabel.text = LocalizedStrings.Labels.RecordAudioView.paused
+        case .Paused:
+            magic(".Paused")
+            currentRecordingState = .Recording
+            audioController!.doPauseRecording(false)
+            pauseContinueButton.setTitle(LocalizedStrings.Temporary.pauseRecording, forState: .Normal)
+            recordingLabel.text = LocalizedStrings.Labels.RecordAudioView.recording
+        default:
+            break
+        }
+        
     }
     
+    //MARK: - Public funk(s)
     
     func configure(withDoneRecordingClosure done: IBActionClosure) {
-        doneRecording = done
+        doneRecordingSuccessfully = done
+        
+        let doneRecordingClosure = { [weak self] (success: Bool, recordedAudio: RecordedAudio?) in
+            if success && recordedAudio != nil {
+                magic("Yay!  \(recordedAudio!.title)")
+                self!.doneRecordingSuccessfully?(recordedAudio: recordedAudio!)
+            } else {
+                magic("Noooooooo......")
+                self!.configureButtonsAndLabels()
+            }
+        }
+        audioController = AudioController(withDoneRecordingClosure: doneRecordingClosure)
+        
+        configureButtonsAndLabels()
     }
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    
+    //MARK: - Private funk(s)
+    
+    private func configureButtonsAndLabels() {
+        recordAudioButton.enabled   = true
+        recordingLabel.text         = LocalizedStrings.Labels.RecordAudioView.tapToRecord
+        doneButton.enabled          = false
+        doneButton.hidden           = true
+        pauseContinueButton.enabled = false
+        pauseContinueButton.hidden  = true
     }
-    */
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

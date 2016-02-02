@@ -15,11 +15,20 @@ struct LocalizedStrings {
     
     struct Labels {
         struct RecordAudioView {
-            
+            static let tapToRecord  = NSLocalizedString("labels.tapToRecord",   value: "Tap to Record", comment: "")
+            static let recording    = NSLocalizedString("labels.recording",     value: "Recording...",  comment: "")
+            static let paused       = NSLocalizedString("labels.paused",        value: "Paused...",     comment: "")
         }
         
         struct PlaybackAudioView {
-            
+            static let effectDelay      = NSLocalizedString("labels.effectDelay",       value: "Delay",         comment: "")
+            static let effectDistortion = NSLocalizedString("labels.effectDistortion",  value: "Distortion",    comment: "")
+            static let effectReverb     = NSLocalizedString("labels.effectReverb",      value: "Reverb",        comment: "")
         }
+    }
+    
+    struct Temporary {
+        static let pauseRecording       = NSLocalizedString("vcTitles.pause",       value: "Pause",     comment: "")
+        static let continueRecording    = NSLocalizedString("vcTitles.continue",    value: "Continue",  comment: "")
     }
 }

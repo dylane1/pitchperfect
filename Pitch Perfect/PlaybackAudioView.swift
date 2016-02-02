@@ -8,9 +8,20 @@
 
 import UIKit
 
-class PlaybackAudioView: UIView {
-    private lazy var audioController = AudioController()
+protocol PlaybackAudioViewDataSource {
+    var recordedAudio: RecordedAudio { get }
+    var delaySetting: Float { get }
+    var distortionSetting: Float { get }
+    var reverbSetting: Float { get }
+}
+
+
+final class PlaybackAudioView: UIView {
+    private var audioController: AudioController!
     
+    private var dataSource: PlaybackAudioViewModel!
+    
+    //MARK: - IBOutlets
     @IBOutlet weak var snailButton: UIButton!
     @IBOutlet weak var rabbitButton: UIButton!
     @IBOutlet weak var chipmunkButton: UIButton!
@@ -18,10 +29,15 @@ class PlaybackAudioView: UIView {
 
     @IBOutlet weak var stopButton: UIButton!
     
-    @IBOutlet weak var effect1Slider: UISlider!
-    @IBOutlet weak var effect2Slider: UISlider!
-    @IBOutlet weak var effect3Slider: UISlider!
+    @IBOutlet weak var delayLabel: UILabel!
+    @IBOutlet weak var delaySlider: UISlider!
+    @IBOutlet weak var distortionLabel: UILabel!
+    @IBOutlet weak var distortionSlider: UISlider!
+    @IBOutlet weak var reverbLabel: UILabel!
+    @IBOutlet weak var reverbSlider: UISlider!
     
+    
+    //MARK: - IBActions
     @IBAction func snailButtonTapped(sender: AnyObject) {
         playIt(.Snail)
     }
@@ -38,7 +54,74 @@ class PlaybackAudioView: UIView {
         audioController.stopPlayback()
     }
     
-    private func playIt(type: AudioPlaybackType) {
-        audioController.playRecording(type, effect1: effect1Slider.value, effect2: effect2Slider.value, effect3: effect3Slider.value)
+    @IBAction func delaySliderChanged(sender: UISlider) {
+        dataSource.delaySetting = sender.value
+    }
+    @IBAction func distortionSliderChanged(sender: UISlider) {
+        dataSource.distortionSetting = sender.value
+    }
+    @IBAction func reverbSliderChanged(sender: UISlider) {
+        dataSource.reverbSetting = sender.value
+    }
+    
+    
+    //MARK: - Public funk(s)
+    func configure(withViewModel viewModel: PlaybackAudioViewModel) {
+        dataSource      = viewModel
+        audioController = AudioController(withRecordedAudio: dataSource.recordedAudio)
+        configureLabels()
+        configureSliders()
+    }
+    
+    
+    //MARK: - Private funk(s)
+    private func configureLabels() {
+        let labelAttributes  = [
+            NSForegroundColorAttributeName : UIColor.blackColor(),
+            NSFontAttributeName: UIFont.systemFontOfSize(17, weight: UIFontWeightMedium)
+        ]
+        var string = LocalizedStrings.Labels.PlaybackAudioView.effectDelay
+        delayLabel.attributedText = NSAttributedString(string: string, attributes: labelAttributes)
+        
+        string = LocalizedStrings.Labels.PlaybackAudioView.effectDistortion
+        distortionLabel.attributedText = NSAttributedString(string: string, attributes: labelAttributes)
+        
+        string = LocalizedStrings.Labels.PlaybackAudioView.effectReverb
+        reverbLabel.attributedText = NSAttributedString(string: string, attributes: labelAttributes)
+    }
+    
+    private func configureSliders() {
+        delaySlider.value = dataSource.delaySetting
+        distortionSlider.value = dataSource.distortionSetting
+        reverbSlider.value = dataSource.reverbSetting
+    }
+    
+    private func playIt(playbackType: AudioPlaybackType) {
+        audioController.playRecording(
+            playbackType,
+            delay: delaySlider.value,
+            distortion: distortionSlider.value,
+            reverb: reverbSlider.value)
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
