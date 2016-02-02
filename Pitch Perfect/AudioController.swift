@@ -119,6 +119,9 @@ final class AudioController: NSObject {
         distortion: Float,
         reverb: Float)
     {
+        /** Stop playback if currently playing */
+        stopPlayback()
+        
         delayUnit.delayTime = NSTimeInterval(Double(delay))
         
         /** 

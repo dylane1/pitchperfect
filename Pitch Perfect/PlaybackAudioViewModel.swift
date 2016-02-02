@@ -6,7 +6,10 @@
 //  Copyright © 2016 Slinging Pixels Media. All rights reserved.
 //
 
-
+/*******************************************************************************
+* This class is used to store the effects settings between audio playback sessions
+*
+*******************************************************************************/
 import Foundation
 
 final class PlaybackAudioViewModel: PlaybackAudioViewDataSource {
