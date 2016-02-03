@@ -13,7 +13,6 @@ final class PlaybackAudioViewController: UIViewController {
     private var playbackAudioView: PlaybackAudioView!
     
     var playbackAudioViewDataSource: PlaybackAudioViewModel?
-    var recordedAudio: RecordedAudio?
     
     //MARK: - View Lifecycle
     

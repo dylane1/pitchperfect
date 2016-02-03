@@ -33,11 +33,9 @@ final class RecordAudioViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Constants.SegueIDs.showPlaybackViewController {
             guard let destinationVC = segue.destinationViewController as? PlaybackAudioViewController,
-                  let recordedAudio = recordedAudio as RecordedAudio!,
                   let playbackAudioViewDataSource = playbackAudioViewDataSource as PlaybackAudioViewModel! else { fatalError(":[") }
 
             destinationVC.playbackAudioViewDataSource = playbackAudioViewDataSource
-            destinationVC.recordedAudio = recordedAudio
         }
     }
     
