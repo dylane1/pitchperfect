@@ -9,7 +9,7 @@
 import UIKit
 
 final class RecordAudioView: UIView {
-    typealias IBActionClosure = (recordedAudio: RecordedAudio) -> Void
+    typealias IBActionClosure = (_ recordedAudio: RecordedAudio) -> Void
     private var doneRecordingSuccessfully: IBActionClosure?
     
     enum AudioRecorderState {
@@ -33,12 +33,12 @@ final class RecordAudioView: UIView {
         currentRecordingState = .Recording
         audioController!.startRecording()
         
-        recordAudioButton.enabled   = false
+        recordAudioButton.isEnabled   = false
         recordingLabel.text         = LocalizedStrings.Labels.RecordAudioView.recording
-        doneButton.enabled          = true
-        doneButton.hidden           = false
-        pauseContinueButton.enabled = true
-        pauseContinueButton.hidden  = false
+        doneButton.isEnabled          = true
+        doneButton.isHidden           = false
+        pauseContinueButton.isEnabled = true
+        pauseContinueButton.isHidden  = false
     }
     @IBAction func doneButtonTapped(sender: AnyObject) {
         currentRecordingState = .Stopped
@@ -49,14 +49,14 @@ final class RecordAudioView: UIView {
         switch currentRecordingState {
         case .Recording:
             currentRecordingState = .Paused
-            audioController!.doPauseRecording(true)
-            pauseContinueButton.setTitle(LocalizedStrings.Temporary.continueRecording, forState: .Normal)
+            audioController!.doPauseRecording(doPause: true)
+            pauseContinueButton.setTitle(LocalizedStrings.Temporary.continueRecording, for: .normal)
             recordingLabel.text = LocalizedStrings.Labels.RecordAudioView.paused
         case .Paused:
-            magic(".Paused")
+            magic(object: <#T#>, ".Paused")
             currentRecordingState = .Recording
-            audioController!.doPauseRecording(false)
-            pauseContinueButton.setTitle(LocalizedStrings.Temporary.pauseRecording, forState: .Normal)
+            audioController!.doPauseRecording(doPause: false)
+            pauseContinueButton.setTitle(LocalizedStrings.Temporary.pauseRecording, for: .normal)
             recordingLabel.text = LocalizedStrings.Labels.RecordAudioView.recording
         default:
             break
@@ -66,15 +66,15 @@ final class RecordAudioView: UIView {
     
     //MARK: - Public funk(s)
     
-    func configure(withDoneRecordingClosure done: IBActionClosure) {
+    func configure(withDoneRecordingClosure done: @escaping IBActionClosure) {
         doneRecordingSuccessfully = done
         
         let doneRecordingClosure = { [weak self] (success: Bool, recordedAudio: RecordedAudio?) in
             if success && recordedAudio != nil {
-                magic("Yay!  \(recordedAudio!.title)")
-                self!.doneRecordingSuccessfully?(recordedAudio: recordedAudio!)
+                magic(object: <#T#>, "Yay!  \(recordedAudio!.title)")
+                self!.doneRecordingSuccessfully?(recordedAudio!)
             } else {
-                magic("Noooooooo......")
+                magic(object: <#T#>, "Noooooooo......")
                 self!.configureButtonsAndLabels()
             }
         }
@@ -86,12 +86,12 @@ final class RecordAudioView: UIView {
     //MARK: - Private funk(s)
     
     private func configureButtonsAndLabels() {
-        recordAudioButton.enabled   = true
+        recordAudioButton.isEnabled   = true
         recordingLabel.text         = LocalizedStrings.Labels.RecordAudioView.tapToRecord
-        doneButton.enabled          = false
-        doneButton.hidden           = true
-        pauseContinueButton.enabled = false
-        pauseContinueButton.hidden  = true
+        doneButton.isEnabled          = false
+        doneButton.isHidden           = true
+        pauseContinueButton.isEnabled = false
+        pauseContinueButton.isHidden  = true
     }
 
 }
