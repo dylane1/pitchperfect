@@ -39,16 +39,16 @@ final class PlaybackAudioView: UIView {
     
     //MARK: - IBActions
     @IBAction func snailButtonTapped(sender: AnyObject) {
-        playIt(.Snail)
+        playIt(playbackType: .Snail)
     }
     @IBAction func rabbitButtonTapped(sender: AnyObject) {
-        playIt(.Rabbit)
+        playIt(playbackType: .Rabbit)
     }
     @IBAction func chipmunkButtonTapped(sender: AnyObject) {
-        playIt(.Chipmunk)
+        playIt(playbackType: .Chipmunk)
     }
     @IBAction func vaderButtonTapped(sender: AnyObject) {
-        playIt(.Vader)
+        playIt(playbackType: .Vader)
     }
     @IBAction func stopButtonTapped(sender: AnyObject) {
         audioController.stopPlayback()
@@ -77,8 +77,8 @@ final class PlaybackAudioView: UIView {
     //MARK: - Private funk(s)
     private func configureLabels() {
         let labelAttributes  = [
-            NSForegroundColorAttributeName : UIColor.blackColor(),
-            NSFontAttributeName: UIFont.systemFontOfSize(17, weight: UIFontWeightMedium)
+            NSForegroundColorAttributeName : UIColor.black,
+            NSFontAttributeName: UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
         ]
         var string = LocalizedStrings.Labels.PlaybackAudioView.effectDelay
         delayLabel.attributedText = NSAttributedString(string: string, attributes: labelAttributes)
@@ -98,7 +98,7 @@ final class PlaybackAudioView: UIView {
     
     private func playIt(playbackType: AudioPlaybackType) {
         audioController.playRecording(
-            playbackType,
+            playbackType: playbackType,
             delay: delaySlider.value,
             distortion: distortionSlider.value,
             reverb: reverbSlider.value)

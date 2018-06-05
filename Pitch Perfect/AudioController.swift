@@ -13,7 +13,7 @@ final class AudioController: NSObject {
     
     /** Audio Recording */
     typealias DoneRecordingClosure = (_ success: Bool, _ recordedAudio: RecordedAudio?) -> Void
-    private var doneRecordingClosure: DoneRecordingClosure?
+    fileprivate var doneRecordingClosure: DoneRecordingClosure?
     private lazy var audioSession   = AVAudioSession.sharedInstance()
     private var recorder: AVAudioRecorder?
     
@@ -210,9 +210,9 @@ extension AudioController: AVAudioRecorderDelegate {
         deactivateAudioSession()
         if flag {
             let recordedAudio = RecordedAudio(withTitle: recorder.url.lastPathComponent, fileURL: recorder.url as NSURL)
-            doneRecordingClosure?(success: true, recordedAudio: recordedAudio)
+            doneRecordingClosure?(true, recordedAudio)
         } else {
-            doneRecordingClosure?(success: false, recordedAudio: nil)
+            doneRecordingClosure?(false, nil)
         }
     }
 }

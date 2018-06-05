@@ -30,7 +30,7 @@ final class RecordAudioViewController: UIViewController {
 
     //MARK: - Segues
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Constants.SegueIDs.showPlaybackViewController {
             guard let destinationVC = segue.destination as? PlaybackAudioViewController,
                 let playbackAudioViewDataSource = playbackAudioViewDataSource as PlaybackAudioViewModel? else { fatalError(":[") }
