@@ -153,14 +153,14 @@ final class AudioController: NSObject {
          * While it's not really an issue with this app, it has caused problems
          * for me in other apps I've built that have UI animations going on.
          */
-        let concurrentAudioQueue = dispatch_queue_create("com.slingingpixels.PitchPerfect.audioQueue", DISPATCH_QUEUE_CONCURRENT)
+        let concurrentAudioQueue = DispatchQueue(label: "com.slingingpixels.PitchPerfect.audioQueue", attributes: .concurrent)
         
-        dispatch_async(concurrentAudioQueue) {
+        concurrentAudioQueue.async() {
             
             do {
-                let file = try AVAudioFile(forReading: self.recordedAudio!.fileURL)
+                let file = try AVAudioFile(forReading: self.recordedAudio!.fileURL as URL)
                 
-                self.audioPlayer.scheduleFile(file, atTime: nil, completionHandler: nil)
+                self.audioPlayer.scheduleFile(file, at: nil, completionHandler: nil)
                 
                 self.audioEngine.prepare()
                 try self.audioEngine.start()
