@@ -22,7 +22,7 @@ final class RecordAudioViewController: UIViewController {
         title = LocalizedStrings.ViewControllerTitles.record
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         configureView()
@@ -32,8 +32,8 @@ final class RecordAudioViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Constants.SegueIDs.showPlaybackViewController {
-            guard let destinationVC = segue.destinationViewController as? PlaybackAudioViewController,
-                  let playbackAudioViewDataSource = playbackAudioViewDataSource as PlaybackAudioViewModel! else { fatalError(":[") }
+            guard let destinationVC = segue.destination as? PlaybackAudioViewController,
+                let playbackAudioViewDataSource = playbackAudioViewDataSource as PlaybackAudioViewModel? else { fatalError(":[") }
 
             destinationVC.playbackAudioViewDataSource = playbackAudioViewDataSource
         }
@@ -47,7 +47,7 @@ final class RecordAudioViewController: UIViewController {
         let doneRecording = { [weak self] (recordedAudio: RecordedAudio) in
             self!.recordedAudio = recordedAudio
             self!.playbackAudioViewDataSource = PlaybackAudioViewModel(withRecordedAudio: recordedAudio)
-            self!.performSegueWithIdentifier(Constants.SegueIDs.showPlaybackViewController, sender: nil)
+            self!.performSegue(withIdentifier: Constants.SegueIDs.showPlaybackViewController, sender: nil)
         }
         recordAudioView.configure(withDoneRecordingClosure: doneRecording)
     }

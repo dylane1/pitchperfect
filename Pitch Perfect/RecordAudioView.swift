@@ -53,7 +53,7 @@ final class RecordAudioView: UIView {
             pauseContinueButton.setTitle(LocalizedStrings.Temporary.continueRecording, for: .normal)
             recordingLabel.text = LocalizedStrings.Labels.RecordAudioView.paused
         case .Paused:
-            magic(object: <#T#>, ".Paused")
+            magic(".Paused")
             currentRecordingState = .Recording
             audioController!.doPauseRecording(doPause: false)
             pauseContinueButton.setTitle(LocalizedStrings.Temporary.pauseRecording, for: .normal)
@@ -71,10 +71,10 @@ final class RecordAudioView: UIView {
         
         let doneRecordingClosure = { [weak self] (success: Bool, recordedAudio: RecordedAudio?) in
             if success && recordedAudio != nil {
-                magic(object: <#T#>, "Yay!  \(recordedAudio!.title)")
+                magic("Yay!  \(recordedAudio!.title)")
                 self!.doneRecordingSuccessfully?(recordedAudio!)
             } else {
-                magic(object: <#T#>, "Noooooooo......")
+                magic("Noooooooo......")
                 self!.configureButtonsAndLabels()
             }
         }

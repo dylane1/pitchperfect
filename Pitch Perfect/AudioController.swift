@@ -180,15 +180,15 @@ final class AudioController: NSObject {
     
     //MARK: - Private funk(s)
     
-    private func getSoundURL() -> NSURL? {
-        let fileManager = FileManager.defaultManager
-        let urls = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+    fileprivate func getSoundURL() -> NSURL? {
+        let fileManager = FileManager.default
+        let urls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
         let documentDirectory = urls[0] as NSURL
-        let soundURL = documentDirectory.URLByAppendingPathComponent("sound.m4a")
-        return soundURL
+        let soundURL = documentDirectory.appendingPathComponent("sound.m4a")
+        return soundURL! as NSURL
     }
     
-    private func activateAudioSession() {
+    fileprivate func activateAudioSession() {
         do {
             try audioSession.setActive(true)
         } catch {
@@ -196,7 +196,7 @@ final class AudioController: NSObject {
         }
     }
     
-    private func deactivateAudioSession() {
+    fileprivate func deactivateAudioSession() {
         do {
             try audioSession.setActive(false)
         } catch {
