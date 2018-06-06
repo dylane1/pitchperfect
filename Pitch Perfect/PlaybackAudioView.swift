@@ -77,8 +77,8 @@ final class PlaybackAudioView: UIView {
     //MARK: - Private funk(s)
     private func configureLabels() {
         let labelAttributes  = [
-            NSForegroundColorAttributeName : UIColor.black,
-            NSFontAttributeName: UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+            NSAttributedStringKey.foregroundColor : UIColor.black,
+            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
         ]
         var string = LocalizedStrings.Labels.PlaybackAudioView.effectDelay
         delayLabel.attributedText = NSAttributedString(string: string, attributes: labelAttributes)
