@@ -81,6 +81,7 @@ final class AudioController: NSObject {
     
     /** Audio Recording */
     func startRecording() {
+        magic("")
         let recordSettings = [
             AVSampleRateKey:            NSNumber(value: Float(44100.0)),
             AVFormatIDKey:              NSNumber(value:   Int32(kAudioFormatMPEG4AAC)),
@@ -108,6 +109,7 @@ final class AudioController: NSObject {
     }
     
     func doneRecording() {
+        magic("")
         recorder?.stop()
     }
     
@@ -206,8 +208,9 @@ final class AudioController: NSObject {
 }
 
 extension AudioController: AVAudioRecorderDelegate {
-    func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         deactivateAudioSession()
+        magic("successfully?: \(flag)")
         if flag {
             let recordedAudio = RecordedAudio(withTitle: recorder.url.lastPathComponent, fileURL: recorder.url as NSURL)
             doneRecordingClosure?(true, recordedAudio)
