@@ -12,7 +12,7 @@ import AVFoundation
 final class AudioController: NSObject {
     
     /** Audio Recording */
-    typealias DoneRecordingClosure = (success: Bool, recordedAudio: RecordedAudio?) -> Void
+    typealias DoneRecordingClosure = (_ success: Bool, _ recordedAudio: RecordedAudio?) -> Void
     private var doneRecordingClosure: DoneRecordingClosure?
     private lazy var audioSession   = AVAudioSession.sharedInstance()
     private var recorder: AVAudioRecorder?
