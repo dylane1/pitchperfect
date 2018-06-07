@@ -30,11 +30,12 @@ final class RecordAudioViewController: UIViewController {
 
     //MARK: - Segues
     
-    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        magic("prepareForSegue")
         if segue.identifier == Constants.SegueIDs.showPlaybackViewController {
             guard let destinationVC = segue.destination as? PlaybackAudioViewController,
                 let playbackAudioViewDataSource = playbackAudioViewDataSource as PlaybackAudioViewModel? else { fatalError(":[") }
-
+            magic("playbackAudioViewDataSource: \(playbackAudioViewDataSource)")
             destinationVC.playbackAudioViewDataSource = playbackAudioViewDataSource
         }
     }
@@ -45,6 +46,7 @@ final class RecordAudioViewController: UIViewController {
         recordAudioView = view as! RecordAudioView
 
         let doneRecording = { [weak self] (recordedAudio: RecordedAudio) in
+            magic("performSegue")
             self!.recordedAudio = recordedAudio
             self!.playbackAudioViewDataSource = PlaybackAudioViewModel(withRecordedAudio: recordedAudio)
             self!.performSegue(withIdentifier: Constants.SegueIDs.showPlaybackViewController, sender: nil)
