@@ -21,7 +21,7 @@ final class PlaybackAudioViewController: UIViewController {
         
         title = LocalizedStrings.ViewControllerTitles.playback
         
-        guard let playbackAudioViewDataSource = playbackAudioViewDataSource as PlaybackAudioViewModel! else {
+        guard let playbackAudioViewDataSource = playbackAudioViewDataSource as PlaybackAudioViewModel? else {
             fatalError("playbackAudioViewDataSource is not set... :[")
         }
         playbackAudioView = view as! PlaybackAudioView

@@ -33,7 +33,7 @@ final class AudioController: NSObject {
     private var recordedAudio: RecordedAudio?
     
     /** Audio Recording */
-    convenience init(withDoneRecordingClosure closure: DoneRecordingClosure) {
+    convenience init(withDoneRecordingClosure closure: @escaping DoneRecordingClosure) {
         self.init()
         doneRecordingClosure = closure
     }
@@ -44,24 +44,24 @@ final class AudioController: NSObject {
         recordedAudio = audio
         input   = audioEngine.inputNode
         output  = audioEngine.outputNode
-        format  = input!.inputFormatForBus(0)
-        audioEngine.attachNode(audioPlayer)
+        format  = input!.inputFormat(forBus: 0)
+        audioEngine.attach(audioPlayer)
         
         /** Pitch (Using for pitch & rate) */
-        audioEngine.attachNode(pitchUnit)
+        audioEngine.attach(pitchUnit)
         
         /** Delay */
-        audioEngine.attachNode(delayUnit)
+        audioEngine.attach(delayUnit)
         
         /** Distortion */
-        distortionUnit.loadFactoryPreset(.SpeechAlienChatter)
-        audioEngine.attachNode(distortionUnit)
+        distortionUnit.loadFactoryPreset(.speechAlienChatter)
+        audioEngine.attach(distortionUnit)
         
         /** Reverb */
-        audioEngine.attachNode(reverbUnit)
+        audioEngine.attach(reverbUnit)
         
         /** EQ */
-        audioEngine.attachNode(eqUnit)
+        audioEngine.attach(eqUnit)
         
         /** Connect all the things! */
         audioEngine.connect(audioPlayer, to: pitchUnit, format: format!)
@@ -82,14 +82,14 @@ final class AudioController: NSObject {
     /** Audio Recording */
     func startRecording() {
         let recordSettings = [
-            AVSampleRateKey:            NSNumber(float: Float(44100.0)),
-            AVFormatIDKey:              NSNumber(int:   Int32(kAudioFormatMPEG4AAC)),
-            AVNumberOfChannelsKey:      NSNumber(int:   1),
-            AVEncoderAudioQualityKey:   NSNumber(int:   Int32(AVAudioQuality.Medium.rawValue))
+            AVSampleRateKey:            NSNumber(value: Float(44100.0)),
+            AVFormatIDKey:              NSNumber(value:   Int32(kAudioFormatMPEG4AAC)),
+            AVNumberOfChannelsKey:      NSNumber(value:   1),
+            AVEncoderAudioQualityKey:   NSNumber(value:   Int32(AVAudioQuality.medium.rawValue))
         ]
         do {
             try audioSession.setCategory(AVAudioSessionCategoryRecord)
-            try recorder = AVAudioRecorder(URL: getSoundURL()!, settings: recordSettings)
+            try recorder = AVAudioRecorder(url: getSoundURL()! as URL, settings: recordSettings)
             recorder?.delegate = self
             recorder?.prepareToRecord()
             activateAudioSession()
@@ -122,7 +122,7 @@ final class AudioController: NSObject {
         /** Stop playback if currently playing */
         stopPlayback()
         
-        delayUnit.delayTime = NSTimeInterval(Double(delay))
+        delayUnit.delayTime = TimeInterval(Double(delay))
         
         /** 
          * Delay cuts the volume for some reason, so I'm boosting globalGain 
@@ -153,14 +153,14 @@ final class AudioController: NSObject {
          * While it's not really an issue with this app, it has caused problems
          * for me in other apps I've built that have UI animations going on.
          */
-        let concurrentAudioQueue = dispatch_queue_create("com.slingingpixels.PitchPerfect.audioQueue", DISPATCH_QUEUE_CONCURRENT)
+        let concurrentAudioQueue = DispatchQueue(label: "com.slingingpixels.PitchPerfect.audioQueue", attributes: .concurrent)
         
-        dispatch_async(concurrentAudioQueue) {
+        concurrentAudioQueue.async() {
             
             do {
-                let file = try AVAudioFile(forReading: self.recordedAudio!.fileURL)
+                let file = try AVAudioFile(forReading: self.recordedAudio!.fileURL as URL)
                 
-                self.audioPlayer.scheduleFile(file, atTime: nil, completionHandler: nil)
+                self.audioPlayer.scheduleFile(file, at: nil, completionHandler: nil)
                 
                 self.audioEngine.prepare()
                 try self.audioEngine.start()
@@ -181,11 +181,11 @@ final class AudioController: NSObject {
     //MARK: - Private funk(s)
     
     private func getSoundURL() -> NSURL? {
-        let fileManager = NSFileManager.defaultManager()
-        let urls = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        let fileManager = FileManager.default
+        let urls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
         let documentDirectory = urls[0] as NSURL
-        let soundURL = documentDirectory.URLByAppendingPathComponent("sound.m4a")
-        return soundURL
+        let soundURL = documentDirectory.appendingPathComponent("sound.m4a")
+        return soundURL! as NSURL
     }
     
     private func activateAudioSession() {
@@ -206,13 +206,13 @@ final class AudioController: NSObject {
 }
 
 extension AudioController: AVAudioRecorderDelegate {
-    func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         deactivateAudioSession()
         if flag {
-            let recordedAudio = RecordedAudio(withTitle: recorder.url.lastPathComponent!, fileURL: recorder.url)
-            doneRecordingClosure?(success: true, recordedAudio: recordedAudio)
+            let recordedAudio = RecordedAudio(withTitle: recorder.url.lastPathComponent, fileURL: recorder.url as NSURL)
+            doneRecordingClosure?(true, recordedAudio)
         } else {
-            doneRecordingClosure?(success: false, recordedAudio: nil)
+            doneRecordingClosure?(false, nil)
         }
     }
 }
