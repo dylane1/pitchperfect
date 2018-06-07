@@ -31,9 +31,6 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rVp-qi-hgu">
                                                 <rect key="frame" x="16.5" y="0.0" width="100" height="100"/>
                                                 <state key="normal" image="Microphone"/>
-                                                <connections>
-                                                    <action selector="recordButtonTapped:" destination="8bC-Xf-vdC" eventType="touchUpInside" id="GmZ-8c-VVD"/>
-                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(((RECORDING)))" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nKA-lr-DRi">
                                                 <rect key="frame" x="0.0" y="100" width="133" height="20.5"/>
@@ -49,16 +46,10 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pUD-Mj-Eez">
                                                 <rect key="frame" x="0.0" y="0.0" width="171.5" height="30"/>
                                                 <state key="normal" title="Done"/>
-                                                <connections>
-                                                    <action selector="doneButtonTapped:" destination="8bC-Xf-vdC" eventType="touchUpInside" id="U8J-j6-brO"/>
-                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2G3-Pg-k39">
                                                 <rect key="frame" x="171.5" y="0.0" width="171.5" height="30"/>
                                                 <state key="normal" title="Pause"/>
-                                                <connections>
-                                                    <action selector="pauseButtonTapped:" destination="8bC-Xf-vdC" eventType="touchUpInside" id="bkV-bX-WE0"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -95,7 +86,7 @@
         <!--Navigation Controller-->
         <scene sceneID="ZXf-C0-TRB">
             <objects>
-                <navigationController id="rv4-4t-UJ5" customClass="NavigationController" customModule="Pitch_Perfect" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="rv4-4t-UJ5" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="chl-Zu-mPC">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -130,14 +121,14 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 <state key="normal" image="Snail"/>
                                                 <connections>
-                                                    <action selector="snailButtonTapped:" destination="bYk-qj-gm2" eventType="touchUpInside" id="TBR-3Y-Z7n"/>
+                                                    <action selector="snailButtonTappedWithSender:" destination="bYk-qj-gm2" eventType="touchUpInside" id="62d-EC-Yas"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Oo-eZ-K08">
                                                 <rect key="frame" x="203" y="0.0" width="100" height="100"/>
                                                 <state key="normal" image="Rabbit"/>
                                                 <connections>
-                                                    <action selector="rabbitButtonTapped:" destination="bYk-qj-gm2" eventType="touchUpInside" id="XlZ-k8-a7k"/>
+                                                    <action selector="rabbitButtonTappedWithSender:" destination="bYk-qj-gm2" eventType="touchUpInside" id="vZd-vK-lAP"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -149,14 +140,14 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 <state key="normal" image="Chipmunk"/>
                                                 <connections>
-                                                    <action selector="chipmunkButtonTapped:" destination="bYk-qj-gm2" eventType="touchUpInside" id="0QA-zv-a2L"/>
+                                                    <action selector="chipmunkButtonTappedWithSender:" destination="bYk-qj-gm2" eventType="touchUpInside" id="edf-Se-Qqp"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fxo-DX-cN5">
                                                 <rect key="frame" x="203" y="0.0" width="100" height="100"/>
                                                 <state key="normal" image="Vader"/>
                                                 <connections>
-                                                    <action selector="vaderButtonTapped:" destination="bYk-qj-gm2" eventType="touchUpInside" id="Rx6-NM-iS9"/>
+                                                    <action selector="vaderButtonTappedWithSender:" destination="bYk-qj-gm2" eventType="touchUpInside" id="RtV-R9-Qpv"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -176,7 +167,7 @@
                                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="qKb-6I-8h2">
                                                         <rect key="frame" x="18" y="20.5" width="267" height="31"/>
                                                         <connections>
-                                                            <action selector="delaySliderChanged:" destination="bYk-qj-gm2" eventType="valueChanged" id="eQQ-2t-t2x"/>
+                                                            <action selector="delaySliderChangedWithSender:" destination="bYk-qj-gm2" eventType="valueChanged" id="V3e-rI-vJj"/>
                                                         </connections>
                                                     </slider>
                                                 </subviews>
@@ -197,7 +188,7 @@
                                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="dUh-H0-qJG">
                                                         <rect key="frame" x="18" y="20.5" width="267" height="31"/>
                                                         <connections>
-                                                            <action selector="distortionSliderChanged:" destination="bYk-qj-gm2" eventType="valueChanged" id="e2n-2g-JT3"/>
+                                                            <action selector="distortionSliderChangedWithSender:" destination="bYk-qj-gm2" eventType="valueChanged" id="MWg-kK-WHg"/>
                                                         </connections>
                                                     </slider>
                                                 </subviews>
@@ -218,7 +209,7 @@
                                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ej4-XP-lYh">
                                                         <rect key="frame" x="18" y="20.5" width="267" height="31"/>
                                                         <connections>
-                                                            <action selector="reverbSliderChanged:" destination="bYk-qj-gm2" eventType="valueChanged" id="mPU-gt-r7m"/>
+                                                            <action selector="reverbSliderChangedWithSender:" destination="bYk-qj-gm2" eventType="valueChanged" id="yY0-Px-H51"/>
                                                         </connections>
                                                     </slider>
                                                 </subviews>
@@ -233,7 +224,7 @@
                                         <rect key="frame" x="126.5" y="493" width="50" height="50"/>
                                         <state key="normal" image="Stop"/>
                                         <connections>
-                                            <action selector="stopButtonTapped:" destination="bYk-qj-gm2" eventType="touchUpInside" id="Pq6-JA-SpA"/>
+                                            <action selector="stopButtonTappedWithSender:" destination="bYk-qj-gm2" eventType="touchUpInside" id="sOq-RJ-vAr"/>
                                         </connections>
                                     </button>
                                 </subviews>
