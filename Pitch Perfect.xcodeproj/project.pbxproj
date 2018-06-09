@@ -25,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		A34BAE681C602D3400027404 /* PlaybackAudioViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackAudioViewModel.swift; sourceTree = "<group>"; };
+		A35853A420CB15B300F19D2B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A3B5574B1C57EA01001C3F99 /* Pitch Perfect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pitch Perfect.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3B5574E1C57EA02001C3F99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3B557501C57EA02001C3F99 /* RecordAudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordAudioViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +85,7 @@
 				A3B557551C57EA02001C3F99 /* Assets.xcassets */,
 				A3B557571C57EA02001C3F99 /* LaunchScreen.storyboard */,
 				A3B5575A1C57EA02001C3F99 /* Info.plist */,
+				A35853A420CB15B300F19D2B /* README.md */,
 			);
 			path = "Pitch Perfect";
 			sourceTree = "<group>";
